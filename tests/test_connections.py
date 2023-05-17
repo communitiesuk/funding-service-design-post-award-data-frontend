@@ -1,6 +1,18 @@
-from unittest.mock import patch
+import pytest
 
+from app import create_app
 from app.main.data import get_remote_data
+
+
+@pytest.fixture
+def app():
+    app = create_app()
+    yield app
+
+
+@pytest.fixture
+def client(app):
+    return app.test_client()
 
 
 def test_get_remote_data_success(requests_mock, app):
@@ -12,18 +24,18 @@ def test_get_remote_data_success(requests_mock, app):
     )
 
     with app.app_context():
-        actual_data = get_remote_data("http://example.com", "/api")
+        actual_data, actual_status_code = get_remote_data("http://example.com", "/api")
 
         assert actual_data == expected_data
+        assert actual_status_code == expected_status_code
 
 
-def test_get_remote_data_failure(app):
-    hostname = "http://example.com"
-    endpoint = "/api"
+def test_get_remote_data_failure(requests_mock, app):
+    expected_status_code = 404
 
-    # Mock the abort function
-    with patch("app.main.data.abort") as mock_abort:
-        with app.app_context():
-            get_remote_data(hostname, endpoint)
+    requests_mock.get("http://example.com/api", status_code=expected_status_code)
 
-        mock_abort.assert_called_with(500)
+    with app.app_context():
+        actual_data, actual_status_code = get_remote_data("http://example.com", "/api")
+        assert actual_data is None
+        assert actual_status_code == expected_status_code

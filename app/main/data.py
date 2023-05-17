@@ -1,5 +1,5 @@
 import requests
-from flask import abort, current_app
+from flask import current_app
 
 
 def get_remote_data(hostname, endpoint):
@@ -17,9 +17,10 @@ def get_remote_data(hostname, endpoint):
     response = requests.get(hostname + endpoint)
     if response.status_code == 200:
         data = response.json()
-        return data
+        return data, 200
     else:
-        current_app.logger.error(
-            f"Unable to recover data @: {hostname + endpoint} with {response.status_code}"
+        current_app.logger.warning(
+            "GET remote data call was unsuccessful with status code:"
+            f" {response.status_code}."
         )
-        return abort(500)
+        return None, response.status_code

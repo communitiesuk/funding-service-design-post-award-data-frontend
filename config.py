@@ -12,4 +12,4 @@ class Config(object):
     SERVICE_URL = os.environ.get("SERVICE_URL")
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
-    API_HOSTNAME = os.environ.get("API_HOSTNAME")
+    HOSTNAME = os.environ.get("HOSTNAME")
