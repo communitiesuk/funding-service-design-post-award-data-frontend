@@ -1,19 +1,31 @@
-from flask import flash, json, make_response, redirect, render_template, request, url_for
+from flask import abort, current_app, flash, json, make_response, redirect, render_template, request, url_for
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
 from app.main import bp
+from app.main.data import get_remote_data
 from app.main.forms import CookiesForm
+from config import Config
 
 
 @bp.route("/", methods=["GET"])
 def index():
-    return redirect(url_for('main.download'))
+    return redirect(url_for("main.download"))
 
 
-@bp.route("/download", methods=["GET"])
+@bp.route("/download", methods=["GET", "POST"])
 def download():
-    return render_template("download.html")
+    if request.method == "GET":
+        return render_template("download.html")
+    if request.method == "POST":
+        resp = get_remote_data(Config.HOSTNAME, "") # specify endpoint here
+        if resp is None:
+            current_app.logger.error(
+                f"Data request failed, unable to recover: {Config.BACKEND_API_ENDPOINT}"
+            )
+            return abort(500)
+        return resp
+
 
 @bp.route("/accessibility", methods=["GET"])
 def accessibility():
