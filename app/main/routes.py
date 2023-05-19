@@ -27,6 +27,7 @@ def download():
         return resp
 
 
+
 @bp.route("/accessibility", methods=["GET"])
 def accessibility():
     return render_template("accessibility.html")
@@ -70,6 +71,11 @@ def cookies():
 @bp.route("/privacy", methods=["GET"])
 def privacy():
     return render_template("privacy.html")
+
+
+@bp.route("/search", methods=["POST"])
+def search():
+    return render_template("search.html")
 
 
 @bp.app_errorhandler(HTTPException)
