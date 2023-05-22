@@ -18,10 +18,10 @@ def download():
     if request.method == "GET":
         return render_template("download.html")
     if request.method == "POST":
-        resp = get_remote_data(Config.HOSTNAME, "") # specify endpoint here
+        resp = get_remote_data(Config.API_HOSTNAME, "") # specify endpoint here
         if resp is None:
             current_app.logger.error(
-                f"Data request failed, unable to recover: {Config.BACKEND_API_ENDPOINT}"
+                f"Data request failed, unable to recover @ API hostname: {Config.API_HOSTNAME}"
             )
             return abort(500)
         return resp
