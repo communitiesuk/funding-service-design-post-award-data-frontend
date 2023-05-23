@@ -17,36 +17,27 @@
 )}}
 
 {{ govukCheckboxes({
-	name: "options",
-	fieldset: {
-	  legend: {
-		text: "abc",
-		isPageHeading: true,
-		classes: "govuk-fieldset__legend--l"
-	  }
-	},
-	hint: {
-	  text: "Select all that apply."
-	},
-	items: [
-	  {
-		value: "Fund",
-		text: "Filter by fund"
-	  },
-	  {
-		value: "Area",
-		text: "Filter by area"
-	  },
-	  {
-		value: "Funded organisation",
-		text: "Filter by funded organisation"
-	  },
-	  {
-		value: "Outcomes",
-		text: "Filter by outcomes"
-	  }
+	"name": "options",
+	"items": [
+		{
+			"value": "fund",
+			"text": "Filter by fund"
+		},
+		{
+			"value": "area",
+			"text": "Filter by area"
+		},
+		{
+			"value": "organisation",
+			"text": "Filter by organisation"
+		},
+		{
+			"value": "outcomes",
+			"text": "Filter by outcomes"
+		}
 	]
-  }) }}
+  }) 
+}}
 
 {% set select_data = {
 	'id': 'select-1',

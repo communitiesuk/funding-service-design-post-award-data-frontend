@@ -3,7 +3,7 @@ import os
 import shutil
 import urllib.request
 import zipfile
-
+from distutils.dir_util import copy_tree
 
 def build_govuk_assets():
     DIST_ROOT = "./app/static/dist"
@@ -18,12 +18,12 @@ def build_govuk_assets():
     ASSETS_PATH = DIST_PATH + ASSETS_DIR
 
     # Checks if GovUK Frontend Assets already built
-    if os.path.exists(DIST_PATH):
-        print(
-            "GovUK Frontend assets already built."
-            "If you require a rebuild manually run build.build_govuk_assets"
-        )
-        return True
+    # if os.path.exists(DIST_PATH):
+    #     print(
+    #         "GovUK Frontend assets already built."
+    #         "If you require a rebuild manually run build.build_govuk_assets"
+    #     )
+    #     return True
 
     # Download zips from GOVUK_URL
     # There is a known problem on Mac where one must manually
@@ -77,6 +77,13 @@ def build_govuk_assets():
     shutil.copyfile(
         "app/static/src/styles/landing.css",
         "./app/static/dist/styles/landing.css",
+    )
+
+    # copy components
+    os.makedirs("./app/static/dist/govuk_frontend_jinja/components")
+    copy_tree(
+        "app/static/src/templates/components",
+        "./app/static/dist/govuk_frontend_jinja/components",
     )
 
     # Delete temp files
