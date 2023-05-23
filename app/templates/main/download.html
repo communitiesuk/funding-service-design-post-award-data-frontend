@@ -10,74 +10,60 @@
 {{ super() }}
 {% endblock %}
 
-{% block content %}
-<form method="post" action="{{ url_for('main.download') }}">
-    {{ govukLabel (
-        {'text': 'Download monitoring and evaluation data', 'classes': 'govuk-label--xl'}
-    )}}
+{% block content %} 
 
-    {{ govukAccordion({
-        "id": "default-example",
-        "headingLevel": 2,
-        "items": [
-          {
-            "heading": {
-              "text": "Filter by fund"
-            },
-            "content": {
-              "text": ""
-            }
-          },
-          {
-            "heading": {
-              "text": "Filter by area"
-            },
-            "content": {
-              "text": ""
-            }
-          },
-          {
-            "heading": {
-              "text": "Filter by funded organisation"
-            },
-            "content": {
-              "text": ""
-            }
-          },
-          {
-            "heading": {
-              "text": "Filter by outcomes"
-            },
-            "content": {
-              "text": ""
-            }
-          },
-		  {
-            "heading": {
-              "text": "Filter by returns"
-            },
-            "content": {
-              "text": ""
-            }
-          }
-        ]
-    }) }}
+{{ govukLabel (
+	{'text': 'Download monitoring and evaluation data', 'classes': 'govuk-label--xl'} 
+)}}
 
-    {% set select_data = {
-        'id': 'select-1',
-        'name': 'select-1',
-        'label': {'text': 'Data format'},
-        'items': [
-          {'value': 1, 'text': 'XSLX (Excel)'},
-          {'value': 2, 'text': 'JSON'},
-          {'value': 3, 'text': 'XML'}
-        ]
-    } %}
+{{ govukCheckboxes({
+	name: "abc",
+	fieldset: {
+	  legend: {
+		text: "abc",
+		isPageHeading: true,
+		classes: "govuk-fieldset__legend--l"
+	  }
+	},
+	hint: {
+	  text: "Select all that apply."
+	},
+	items: [
+	  {
+		value: "Fund",
+		text: "Filter by fund"
+	  },
+	  {
+		value: "Area",
+		text: "Filter by area"
+	  },
+	  {
+		value: "Funded organisation",
+		text: "Filter by funded organisation"
+	  },
+	  {
+		value: "Outcomes",
+		text: "Filter by outcomes"
+	  }
+	]
+  }) }}
 
-    {{ govukSelect(select_data) }}
+{% set select_data = {
+	'id': 'select-1',
+	'name': 'select-1',
+	'label': {'text': 'Data format'},
+	'items': [
+	  {'value': 1, 'text': 'XSLX (Excel)'},
+	  {'value': 2, 'text': 'JSON'},
+	  {'value': 3, 'text': 'XML'}
+	]
+  } %}
+  
+{{ govukSelect(select_data) }}
 
-    {{ govukButton (
-        {'text': 'Download'}
-    )}}
-</form>
+{{ govukButton (
+	{'text': 'Download'} 
+)}}
+
+
 {% endblock %}
