@@ -8,13 +8,15 @@
 
 {% block beforeContent %}
 {{ super() }}
-{% endblock %}
+{% endblock beforeContent %}
 
 {% block content %} 
 
 {{ govukLabel (
 	{'text': 'Download monitoring and evaluation data', 'classes': 'govuk-label--xl'} 
 )}}
+
+<form method="POST">
 
 {{ govukCheckboxes({
 	"name": "options",
@@ -56,5 +58,6 @@
 	{'text': 'Download'} 
 )}}
 
+</form>
 
-{% endblock %}
+{% endblock content %}
