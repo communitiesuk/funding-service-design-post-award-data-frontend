@@ -38,7 +38,7 @@ network:
 variables:                    # Pass environment variables as key value pairs.
  LOG_LEVEL: info
  DATA_STORE_API_HOST: 'http://data-store:8080'
- COOKIE_DOMAIN: '.dev.gids.dev'
+ COOKIE_DOMAIN: '.${COPILOT_ENVIRONMENT_NAME}.gids.dev'
 
 secrets:
     AUTHENTICATOR_HOST: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/AUTHENTICATOR_HOST # The key is the name of the environment variable, the value is the name of the SSM parameter.
