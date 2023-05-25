@@ -1,0 +1,23 @@
+{% macro selectItems(params) %}
+
+<div class="govuk-form-group">
+    <label class="govuk-label" for="quarter">
+      Financial Quarter
+    </label>
+    <select class="govuk-select" id="quarter" name="quarter">
+        {% for item in params['quarter'] %}
+            <option value="Choose Quarter">{{item}}</option>
+        {% endfor %}
+    </select>
+
+    <label class="govuk-label" for="sort">
+        Year
+    </label>
+    <select class="govuk-select" id="year" name="year">
+        {% for item in params['year'] %}
+            <option value="Choose Year">{{item}}</option>
+        {% endfor %}
+    </select>
+</div>
+
+{% endmacro %}
