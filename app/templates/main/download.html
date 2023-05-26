@@ -65,21 +65,7 @@
         ]
     }) }}
 
-    {% set select_data = {
-        'id': 'select-1',
-        'name': 'select-1',
-        'label': {'text': 'Data format'},
-        'items': [
-          {'value': 1, 'text': 'XSLX (Excel)'},
-          {'value': 2, 'text': 'JSON'},
-          {'value': 3, 'text': 'XML'}
-        ]
-    } %}
-
-    {{ govukSelect(select_data) }}
-
-    {{ govukButton (
-        {'text': 'Download'}
-    )}}
+    {{ form.file_format}}
+    {{ form.save }}
 </form>
 {% endblock %}

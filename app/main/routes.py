@@ -37,15 +37,7 @@ def download():
     if request.method == "GET":
         return render_template("download.html", form=form)
     if request.method == "POST":
-        # breakpoint()
         file_format = form.file_format.data
-
-        if file_format not in ["json", "xlsx"]:
-            current_app.logger.error(
-                f"Unexpected file format requested from /download: {file_format}"
-            )
-            return abort(500), f"Unknown file format: {file_format}"
-
         response = get_response(
             Config.DATA_STORE_API_HOST,
             "/download",
