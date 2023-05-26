@@ -7,6 +7,8 @@ from flask import (
     render_template,
     request,
     url_for,
+    current_app,
+    abort
 )
 
 # isort: on
@@ -24,7 +26,7 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.data import get_remote_data
-from app.main.forms import CookiesForm
+from app.main.forms import CookiesForm, DownloadForm
 from config import Config
 
 
@@ -35,9 +37,12 @@ def index():
 
 @bp.route("/download", methods=["GET", "POST"])
 def download():
+    form = DownloadForm()
+
     if request.method == "GET":
         return render_template(
             "download.html",
+            form=form,
             fundParams = fund,
             areaParams = area,
             fundedOrgParams = fundedOrg,

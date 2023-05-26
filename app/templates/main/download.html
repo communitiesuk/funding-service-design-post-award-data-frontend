@@ -20,6 +20,7 @@
 )}}
 
 <form method="post" action="{{ url_for('main.download') }}">
+  {{ form.csrf_token }}
 
   {{ govukAccordion({
     "id": "default-example",
@@ -68,7 +69,6 @@
     ]
 }) }}
 
-</form>
 
 {% set select_data = {
 	'id': 'select-1',
