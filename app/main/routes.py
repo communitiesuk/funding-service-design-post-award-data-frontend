@@ -15,19 +15,15 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.data import get_remote_data
-from app.main.data import get_remote_data
 from app.main.forms import CookiesForm
-from config import Config
 from config import Config
 
 
 @bp.route("/", methods=["GET"])
 def index():
     return redirect(url_for("main.download"))
-    return redirect(url_for("main.download"))
 
 
-@bp.route("/download", methods=["GET", "POST"])
 @bp.route("/download", methods=["GET", "POST"])
 def download():
     if request.method == "GET":
