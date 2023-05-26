@@ -10,6 +10,15 @@ from flask import (
 )
 
 # isort: on
+
+from app.static.download_data import (
+    area,
+    fund,
+    fundedOrg,
+    outcomes,
+    returns
+)
+
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -27,7 +36,14 @@ def index():
 @bp.route("/download", methods=["GET", "POST"])
 def download():
     if request.method == "GET":
-        return render_template("download.html")
+        return render_template(
+            "download.html",
+            fundParams = fund,
+            areaParams = area,
+            fundedOrgParams = fundedOrg,
+            outcomesParams = outcomes,
+            returnsParams = returns,
+        )
     if request.method == "POST":
         resp = get_remote_data(Config.API_HOSTNAME, "") # specify endpoint here
         if resp is None:
