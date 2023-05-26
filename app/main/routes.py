@@ -21,7 +21,7 @@ from werkzeug.exceptions import HTTPException
 from app.const import MIMETYPE
 from app.main import bp
 from app.main.data import get_response
-from app.main.forms import CookiesForm
+from app.main.forms import CookiesForm, DownloadForm
 from config import Config
 
 
@@ -32,10 +32,13 @@ def index():
 
 @bp.route("/download", methods=["GET", "POST"])
 def download():
+    form = DownloadForm()
+
     if request.method == "GET":
-        return render_template("download.html")
+        return render_template("download.html", form=form)
     if request.method == "POST":
-        file_format = request.args.get("file_format")
+        # breakpoint()
+        file_format = form.file_format.data
 
         if file_format not in ["json", "xlsx"]:
             current_app.logger.error(
