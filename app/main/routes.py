@@ -8,18 +8,12 @@ from flask import (
     request,
     url_for,
     current_app,
-    abort
+    abort,
 )
 
 # isort: on
 
-from app.static.download_data import (
-    area,
-    fund,
-    fundedOrg,
-    outcomes,
-    returns
-)
+from app.static.download_data import area, fund, fundedOrg, outcomes, returns
 
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
@@ -43,21 +37,20 @@ def download():
         return render_template(
             "download.html",
             form=form,
-            fundParams = fund,
-            areaParams = area,
-            fundedOrgParams = fundedOrg,
-            outcomesParams = outcomes,
-            returnsParams = returns,
+            fundParams=fund,
+            areaParams=area,
+            fundedOrgParams=fundedOrg,
+            outcomesParams=outcomes,
+            returnsParams=returns,
         )
     if request.method == "POST":
-        resp = get_remote_data(Config.API_HOSTNAME, "") # specify endpoint here
+        resp = get_remote_data(Config.API_HOSTNAME, "")  # specify endpoint here
         if resp is None:
             current_app.logger.error(
                 f"Data request failed, unable to recover @ API hostname: {Config.API_HOSTNAME}"
             )
             return abort(500)
         return resp
-
 
 
 @bp.route("/accessibility", methods=["GET"])

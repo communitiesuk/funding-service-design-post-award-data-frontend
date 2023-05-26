@@ -30,10 +30,13 @@ class DownloadForm(FlaskForm):
     file_format = SelectField(
         "File Format",
         widget=GovSelect(),
-        validators=[
-            InputRequired(message="Select the data format")
+        validators=[InputRequired(message="Select the data format")],
+        choices=[
+            ("csv", "CSV"),
+            ("xlsx", "XSLX (Excel)"),
+            ("json", "JSON"),
+            ("xml", "XML"),
         ],
-        choices = [('csv', 'CSV'), ('xlsx', 'XSLX (Excel)'), ('json', 'JSON'), ('xml', 'XML')],
         default="csv",
     )
     save = SubmitField("Download", widget=GovSubmitInput())
