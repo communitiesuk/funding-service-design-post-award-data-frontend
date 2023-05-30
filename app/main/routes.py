@@ -1,4 +1,6 @@
 # isort: off
+import io
+
 from flask import (
     flash,
     json,
@@ -7,8 +9,9 @@ from flask import (
     render_template,
     request,
     url_for,
-    current_app,
+    send_file,
     abort,
+    current_app,
 )
 
 # isort: on
@@ -18,8 +21,9 @@ from app.static.download_data import area, fund, fundedOrg, outcomes, returns
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
+from app.const import MIMETYPE
 from app.main import bp
-from app.main.data import get_remote_data
+from app.main.data import get_response
 from app.main.forms import CookiesForm, DownloadForm
 from config import Config
 
@@ -44,13 +48,36 @@ def download():
             returnsParams=returns,
         )
     if request.method == "POST":
-        resp = get_remote_data(Config.API_HOSTNAME, "")  # specify endpoint here
-        if resp is None:
+        file_format = form.file_format.data
+        if file_format not in ["json", "xlsx"]:
             current_app.logger.error(
-                f"Data request failed, unable to recover @ API hostname: {Config.API_HOSTNAME}"
+                f"Unexpected file format requested from /download: {file_format}"
             )
-            return abort(500)
-        return resp
+            return abort(500), f"Unknown file format: {file_format}"
+        response = get_response(
+            Config.DATA_STORE_API_HOST,
+            "/download",
+            query_params={"file_format": file_format},
+        )
+
+        content_type = response.headers["content-type"]
+        match content_type:
+            case MIMETYPE.JSON:
+                file_content = io.BytesIO(json.dumps(response.json()).encode("UTF-8"))
+            case MIMETYPE.XLSX:
+                file_content = io.BytesIO(response.content)
+            case _:
+                current_app.logger.error(
+                    f"Response with unexpected content type received from API: {content_type}"
+                )
+                return abort(500), f"Unknown content type: {content_type}"
+
+        return send_file(
+            file_content,
+            download_name=f"data.{file_format}",
+            as_attachment=True,
+            mimetype=content_type,
+        )
 
 
 @bp.route("/accessibility", methods=["GET"])

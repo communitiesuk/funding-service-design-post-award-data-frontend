@@ -1,4 +1,5 @@
 import pytest
+<<<<<<< HEAD
 
 from app import create_app
 from app.main.data import get_remote_data
@@ -18,11 +19,19 @@ def client(app):
 def test_get_remote_data_success(requests_mock, app):
     expected_data = {"key": "value"}
     expected_status_code = 200
+=======
+from werkzeug.exceptions import HTTPException
 
-    requests_mock.get(
-        "http://example.com/api", json=expected_data, status_code=expected_status_code
-    )
+from app.main.data import get_response
 
+
+def test_get_response_success(requests_mock, app_ctx):
+    requests_mock.get("http://example.com/api/endpoint", text="Success")
+>>>>>>> cb76ff51838d29ef83eac962e79f762e0ab9c007
+
+    response = get_response("http://example.com", "/api/endpoint")
+
+<<<<<<< HEAD
     with app.app_context():
         actual_data, actual_status_code = get_remote_data("http://example.com", "/api")
 
@@ -39,3 +48,16 @@ def test_get_remote_data_failure(requests_mock, app):
         actual_data, actual_status_code = get_remote_data("http://example.com", "/api")
         assert actual_data is None
         assert actual_status_code == expected_status_code
+=======
+    assert response.status_code == 200
+    assert response.text == "Success"
+
+
+def test_get_response_failure(requests_mock, app_ctx):
+    requests_mock.get("http://example.com/api/endpoint", status_code=404)
+
+    with pytest.raises(HTTPException) as exc:
+        get_response("http://example.com", "/api/endpoint")
+
+    assert exc.value.code == 500
+>>>>>>> cb76ff51838d29ef83eac962e79f762e0ab9c007

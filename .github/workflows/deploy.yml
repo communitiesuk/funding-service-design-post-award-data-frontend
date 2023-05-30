@@ -16,6 +16,10 @@ jobs:
       - name: Git clone the repository
         uses: actions/checkout@v3
 
+      - name: Build static assets
+        run: |
+           ./build.sh
+
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
