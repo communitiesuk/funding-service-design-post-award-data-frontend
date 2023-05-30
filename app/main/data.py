@@ -26,4 +26,4 @@ def get_response(hostname: str, endpoint: str, query_params: dict = None) -> Res
         current_app.logger.error(
             f"Bad response: {request_url} returned {response.status_code}"
         )
-        return None, response.status_code
+        return abort(500)
