@@ -73,13 +73,6 @@ def build_govuk_assets():
             file.write(filedata)
     os.chdir(cwd)
 
-    # Copy css
-    os.makedirs("./app/static/dist/styles")
-    shutil.copyfile(
-        "app/static/src/styles/landing.css",
-        "./app/static/dist/styles/landing.css",
-    )
-
     # copy components
     os.makedirs("./app/static/dist/govuk_frontend_jinja/components")
     copy_tree(
