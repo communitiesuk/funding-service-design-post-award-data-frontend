@@ -14,7 +14,7 @@ jobs:
     - name: build static assets
       env:
         FLASK_ENV: development
-      run: ./build.sh
+      run: ./build.py
     - name: Run tests
       env:
         FLASK_ENV: development
