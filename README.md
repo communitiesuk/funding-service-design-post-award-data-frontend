@@ -20,7 +20,7 @@ pip3 install -r requirements.txt ; pip3 install -r requirements_dev.txt
 For convenience a shell script has been provided to download and extract the GOV.UK Frontend distribution assets
 
 ```
-./build.sh
+./build.py
 ```
 
 ### Set local environment variables
