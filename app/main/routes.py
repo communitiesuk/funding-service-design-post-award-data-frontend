@@ -21,10 +21,8 @@ from werkzeug.exceptions import HTTPException
 from app.const import MIMETYPE
 from app.main import bp
 from app.main.data import get_response
+from app.main.download_data import area, fund, fundedOrg, outcomes, returns
 from app.main.forms import CookiesForm, DownloadForm
-
-from app.static.download_data import area, fund, fundedOrg, outcomes, returns
-
 from config import Config
 
 
@@ -47,7 +45,7 @@ def download():
             outcomesParams=outcomes,
             returnsParams=returns,
         )
-    
+
     if request.method == "POST":
         file_format = form.file_format.data
         if file_format not in ["json", "xlsx"]:
