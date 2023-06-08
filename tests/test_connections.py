@@ -22,6 +22,7 @@ def test_get_response_failure(requests_mock, app_ctx):
 
     assert exc.value.code == 500
 
+
 # TODO mock responses from db and increase test coverage of front end components
 # def test_get_checkbox_data(flask_test_client, app_ctx):
 #     funds_response = get_checkbox_data("/funds")
