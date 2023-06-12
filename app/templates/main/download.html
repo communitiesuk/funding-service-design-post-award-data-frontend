@@ -6,7 +6,6 @@
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
 {%- from 'govuk_frontend_jinja/components/label/macro.html' import govukLabel -%}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
-{%- from "outcomeCheckboxes.html" import outcomeCheckboxItems -%}
 {%- from "checkboxes.html" import checkboxItems -%}
 {%- from "select.html" import selectItems -%}
 
@@ -45,7 +44,7 @@
                 "text": "Filter by fund"
               },
               "content": {
-                "html": checkboxItems(funds["name"], funds["items"])
+                "html": checkboxItems(fundParams)
               },
             },
             {
@@ -53,7 +52,7 @@
                 "text": "Filter by area"
               },
               "content": {
-                "html": checkboxItems(areas["name"], areas["items"])
+                "html": checkboxItems(areaParams)
               }
             },
             {
@@ -61,7 +60,7 @@
                 "text": "Filter by funded organisation"
               },
               "content": {
-                "html": checkboxItems(orgs["name"], orgs["items"])
+                "html": checkboxItems(fundedOrgParams)
               }
             },
             {
@@ -69,7 +68,7 @@
                 "text": "Filter by outcomes"
               },
               "content": {
-                "html": checkboxItems(outcomes["name"], outcomes["items"])
+                "html": checkboxItems(outcomesParams)
               }
             },
             {
