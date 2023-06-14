@@ -67,18 +67,28 @@ def download():
         areas = request.form.getlist(FormNames.AREAS)
         funds = request.form.getlist(FormNames.FUNDS)
         outcome_categories = request.form.getlist(FormNames.OUTCOMES)
-        reporting_period_start = quarter_to_date(
-            quarter=request.form.get("from-quarter"), year=request.form.get("from-year")
+        from_quarter = request.form.get("from-quarter")
+        from_year = request.form.get("from-year")
+        to_quarter = request.form.get("to-quarter")
+        to_year = request.form.get("to-year")
+
+        reporting_period_start = (
+            quarter_to_date(quarter=from_quarter, year=from_year)
+            if to_quarter and to_year
+            else None
         )
-        reporting_period_end = quarter_to_date(
-            quarter=request.form.get("to-quarter"), year=request.form.get("to-year")
+
+        reporting_period_end = (
+            quarter_to_date(quarter=to_quarter, year=to_year)
+            if to_quarter and to_year
+            else None
         )
 
         query_params = {"file_format": file_format}
         if orgs:
-            query_params["orgs"] = orgs
+            query_params["organisations"] = orgs
         if areas:
-            query_params["areas"] = areas
+            query_params["regions"] = areas
         if funds:
             query_params["funds"] = funds
         if outcome_categories:

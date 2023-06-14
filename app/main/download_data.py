@@ -5,34 +5,10 @@ from typing import Any
 from app.main.data import get_response
 from config import Config
 
-ITL_CODE_TO_NAME = {
-    "TLC": "North East",
-    "TLD": "North West",
-    "TLE": "Yorkshire and the Humber",
-    "TLF": "East Midlands",
-    "TLG": "West Midlands",
-    "TLH": "East of England",
-    "TLI": "London",
-    "TLJ": "South East",
-    "TLK": "South West",
-    "TLM": "Scotland",
-    "TLL": "Wales",
-    "TLN": "Northern Ireland",
-}
-
 
 def quarter_to_date(quarter, year):
-    # January-March is Q1, April-June is Q2, July-September is Q3, and October-December is Q4
-
-    start_year = year.split("/")[0]
-    quarter_mapping = {
-        "1": f"{start_year}-04-01T00:00:00Z",
-        "2": f"{start_year}-07-01T00:00:00Z",
-        "3": f"{start_year}-10-01T00:00:00Z",
-        "4": f"{start_year}-01-01T00:00:00Z",
-    }
-
-    return quarter_mapping.get(quarter)
+    # TODO: Implement this
+    pass
 
 
 class FormNames(StrEnum):
@@ -55,7 +31,6 @@ def get_checkbox_data(endpoint):
         return response.json()
 
 
-# TODO remove all hardcoded data and replace with API calls
 def get_fund_checkboxes() -> dict[str, Any]:
     """Get checkbox data for the funds section.
 
@@ -75,18 +50,27 @@ def get_fund_checkboxes() -> dict[str, Any]:
 def get_area_checkboxes() -> dict[str, Any]:
     """Get checkbox data for the areas section.
 
-    Calls API to get area data and formats to checkbox data format.
-    Example API data: ["TLC", "TLD"]
+    This data is just hardcoded and covers all possible regions.
 
     :return: checkbox data for areas
     """
-    area_data = get_checkbox_data("/regions")
+    area_data = [
+        {"name": "North East", "id": "TLC"},
+        {"name": "North West", "id": "TLD"},
+        {"name": "Yorkshire and the Humber", "id": "TLE"},
+        {"name": "East Midlands", "id": "TLF"},
+        {"name": "West Midlands", "id": "TLG"},
+        {"name": "East of England", "id": "TLH"},
+        {"name": "London", "id": "TLI"},
+        {"name": "South East", "id": "TLJ"},
+        {"name": "South West", "id": "TLK"},
+        {"name": "Scotland", "id": "TLM"},
+        {"name": "Wales", "id": "TLL"},
+        {"name": "Northern Ireland", "id": "TLN"},
+    ]
     area_checkboxes = {
         "name": FormNames.AREAS,
-        "items": [
-            {"id": itl_code, "name": ITL_CODE_TO_NAME[itl_code]}
-            for itl_code in area_data
-        ],
+        "items": area_data,
     }
     return area_checkboxes
 
@@ -179,27 +163,21 @@ def get_returns() -> dict[str, Any]:
     """
     returns_data = get_checkbox_data("/reporting-period-range")
 
-    #  TODO decide which date goes here as the default if /returns endpoint is 404
     if not returns_data:
-        start_date = datetime.strptime("2019-01-01", "%Y-%m-%d")
-        end_date = datetime.strptime("2024-01-01", "%Y-%m-%d")
-
+        years = []
     else:
-        print("returns data", returns_data)
         start_date = datetime.strptime(
             returns_data["start_date"].split("T")[0], "%Y-%m-%d"
         )
-
         end_date = datetime.strptime(returns_data["end_date"].split("T")[0], "%Y-%m-%d")
-
-    year_select_options = generate_financial_years(start_date, end_date)
+        years = generate_financial_years(start_date, end_date)
 
     returns_select = {
         "name": FormNames.RETURNS_PERIOD,
         "from-quarter": [1, 2, 3, 4],
         "to-quarter": [1, 2, 3, 4],
-        "from-year": year_select_options,
-        "to-year": year_select_options,
+        "from-year": years,
+        "to-year": years,
     }
 
     return returns_select
