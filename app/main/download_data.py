@@ -131,6 +131,17 @@ def get_outcome_checkboxes() -> dict[str, Any]:
 
 
 def generate_financial_years(start_date, end_date):
+    """Generate a list of financial years available based on the start and end dates provided by the db
+
+    Args:
+        start_date (datetime.date): The start date.
+        end_date (datetime.date): The end date.
+
+    Returns:
+        list: A list of financial years in the format 'YYYY/YYYY+1', representing the range
+            of dates. Each financial year is represented as a string.
+    """
+
     # Adjust the years for the financial year
     min_year = start_date.year if start_date.month > 3 else start_date.year - 1
     max_year = end_date.year if end_date.month > 3 else end_date.year - 1
@@ -145,7 +156,13 @@ def generate_financial_years(start_date, end_date):
 
 # TODO decide wether to implement this or leave all quarter options available
 def generate_quarters(start_date, end_date):
-    # Calculate which quarter the given min and max month resides in
+    """Calculates which quarter the given min and max month resides in
+
+    Returns:
+        list: A list of quarters corresponding to the range of dates. Each quarter is
+            represented by an integer (1, 2, 3, or 4).
+    """
+
     start_quarter = (start_date.month - 1) // 3 + 1
     end_quarter = (end_date.month - 1) // 3 + 1
 
@@ -155,13 +172,25 @@ def generate_quarters(start_date, end_date):
 
 
 def get_returns() -> dict[str, Any]:
-    returns_data = get_checkbox_data("/returns")
+    """Retrieves data from /returns API endpoint and generates a dictionary of return period options.
 
-    start_date = datetime.strptime(
-        returns_data[0]["start_date"].split("T")[0], "%Y-%m-%d"
-    )
+    Returns:
+        dict: A dictionary containing lists of return period options.
+    """
+    returns_data = get_checkbox_data("/reporting-period-range")
 
-    end_date = datetime.strptime(returns_data[0]["end_date"].split("T")[0], "%Y-%m-%d")
+    #  TODO decide which date goes here as the default if /returns endpoint is 404
+    if not returns_data:
+        start_date = datetime.strptime("2019-01-01", "%Y-%m-%d")
+        end_date = datetime.strptime("2024-01-01", "%Y-%m-%d")
+
+    else:
+        print("returns data", returns_data)
+        start_date = datetime.strptime(
+            returns_data["start_date"].split("T")[0], "%Y-%m-%d"
+        )
+
+        end_date = datetime.strptime(returns_data["end_date"].split("T")[0], "%Y-%m-%d")
 
     returns_select = {
         "name": FormNames.RETURNS_PERIOD,

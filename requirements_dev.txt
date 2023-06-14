@@ -199,6 +199,8 @@ markupsafe==2.1.2
     #   wtforms
 mccabe==0.7.0
     # via flake8
+mocker==1.1.1
+    # via -r requirements_dev.in
 mypy-extensions==1.0.0
     # via black
 packaging==23.1
