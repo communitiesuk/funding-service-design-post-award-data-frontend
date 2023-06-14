@@ -20,6 +20,7 @@ def test_download_get(requests_mock, flask_test_client):
     response = flask_test_client.get("/download")
     assert response.status_code == 200
 
+
 @patch("app.main.routes.get_response")
 def test_download_post_json(mock_get_response, flask_test_client, mocker):
     mock_response = mock_get_response.return_value
