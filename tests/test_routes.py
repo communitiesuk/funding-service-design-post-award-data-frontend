@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 import pytest
-
 from app.const import MIMETYPE
 
 
@@ -21,12 +20,6 @@ def test_download_get(requests_mock, flask_test_client):
     )
     response = flask_test_client.get("/download")
     assert response.status_code == 200
-
-
-@pytest.fixture
-def quarter_to_date():
-    return "2023-02-01T00:00:00Z"
-
 
 @patch("app.main.routes.get_response")
 def test_download_post_json(mock_get_response, flask_test_client, mocker):
