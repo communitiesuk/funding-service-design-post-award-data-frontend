@@ -172,27 +172,21 @@ def get_returns() -> dict[str, Any]:
     """
     returns_data = get_checkbox_data("/reporting-period-range")
 
-    #  TODO decide which date goes here as the default if /returns endpoint is 404
     if not returns_data:
-        start_date = datetime.strptime("2019-01-01", "%Y-%m-%d")
-        end_date = datetime.strptime("2024-01-01", "%Y-%m-%d")
-
+        years = []
     else:
-        print("returns data", returns_data)
         start_date = datetime.strptime(
             returns_data["start_date"].split("T")[0], "%Y-%m-%d"
         )
-
         end_date = datetime.strptime(returns_data["end_date"].split("T")[0], "%Y-%m-%d")
-
-    year_select_options = generate_financial_years(start_date, end_date)
+        years = generate_financial_years(start_date, end_date)
 
     returns_select = {
         "name": FormNames.RETURNS_PERIOD,
         "from-quarter": [1, 2, 3, 4],
         "to-quarter": [1, 2, 3, 4],
-        "from-year": year_select_options,
-        "to-year": year_select_options,
+        "from-year": years,
+        "to-year": years,
     }
 
     return returns_select
