@@ -8,7 +8,16 @@ from config import Config
 
 def quarter_to_date(quarter, year):
     # January-March is Q1, April-June is Q2, July-September is Q3, and October-December is Q4
-    pass
+
+    start_year = year.split("/")[0]
+    quarter_mapping = {
+        "1": f"{start_year}-04-01T00:00:00Z",
+        "2": f"{start_year}-07-01T00:00:00Z",
+        "3": f"{start_year}-10-01T00:00:00Z",
+        "4": f"{start_year}-01-01T00:00:00Z",
+    }
+
+    return quarter_mapping.get(quarter)
 
 
 class FormNames(StrEnum):
@@ -149,8 +158,10 @@ def get_returns() -> dict[str, Any]:
 
     returns_select = {
         "name": FormNames.RETURNS_PERIOD,
-        "quarter": [1, 2, 3, 4],
-        "year": generate_financial_years(start_date, end_date),
+        "from-quarter": [1, 2, 3, 4],
+        "to-quarter": [1, 2, 3, 4],
+        "from-year": generate_financial_years(start_date, end_date),
+        "to-year": generate_financial_years(start_date, end_date),
     }
 
     return returns_select
