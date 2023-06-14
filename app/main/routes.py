@@ -27,8 +27,8 @@ from app.main.download_data import (
     get_fund_checkboxes,
     get_org_checkboxes,
     get_outcome_checkboxes,
+    get_returns,
     quarter_to_date,
-    returns,
 )
 from app.main.forms import CookiesForm, DownloadForm
 from config import Config
@@ -51,7 +51,7 @@ def download():
             areas=get_area_checkboxes(),
             orgs=get_org_checkboxes(),
             outcomes=get_outcome_checkboxes(),
-            returnsParams=returns,
+            returnsParams=get_returns(),
         )
 
     if request.method == "POST":
