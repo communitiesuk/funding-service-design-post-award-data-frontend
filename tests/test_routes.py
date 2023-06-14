@@ -13,6 +13,12 @@ def test_download_get(requests_mock, flask_test_client):
     requests_mock.get("http://data-store/regions", json=[])
     requests_mock.get("http://data-store/funds", json=[])
     requests_mock.get("http://data-store/outcome-categories", json=[])
+    requests_mock.get(
+        "http://data-store/returns",
+        json=[
+            {"end_date": "2023-02-01T00:00:00Z", "start_date": "2023-02-12T00:00:00Z"}
+        ],
+    )
     response = flask_test_client.get("/download")
     assert response.status_code == 200
 
