@@ -192,12 +192,14 @@ def get_returns() -> dict[str, Any]:
 
         end_date = datetime.strptime(returns_data["end_date"].split("T")[0], "%Y-%m-%d")
 
+    year_select_options = generate_financial_years(start_date, end_date)
+
     returns_select = {
         "name": FormNames.RETURNS_PERIOD,
         "from-quarter": [1, 2, 3, 4],
         "to-quarter": [1, 2, 3, 4],
-        "from-year": generate_financial_years(start_date, end_date),
-        "to-year": generate_financial_years(start_date, end_date),
+        "from-year": year_select_options,
+        "to-year": year_select_options,
     }
 
     return returns_select
