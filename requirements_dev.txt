@@ -199,8 +199,6 @@ markupsafe==2.1.2
     #   wtforms
 mccabe==0.7.0
     # via flake8
-mocker==1.1.1
-    # via -r requirements_dev.in
 mypy-extensions==1.0.0
     # via black
 packaging==23.1
@@ -248,9 +246,12 @@ pytest==7.3.1
     #   -r requirements_dev.in
     #   pytest-cov
     #   pytest-env
+    #   pytest-mock
 pytest-cov==4.0.0
     # via -r requirements_dev.in
 pytest-env==0.8.1
+    # via -r requirements_dev.in
+pytest-mock==3.10.0
     # via -r requirements_dev.in
 python-consul==1.1.0
     # via
