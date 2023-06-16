@@ -167,6 +167,11 @@ def privacy():
     return render_template("privacy.html")
 
 
+@bp.route("/help", methods=["GET"])
+def help():
+    return render_template("help.html")
+
+
 @bp.app_errorhandler(HTTPException)
 def http_exception(error):
     return render_template(f"{error.code}.html"), error.code
