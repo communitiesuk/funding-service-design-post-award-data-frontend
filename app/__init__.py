@@ -71,8 +71,9 @@ def create_app(config_class=Config):
 
     @app.before_request
     def all_requests_require_login():
-        if request.endpoint == Healthcheck.healthcheck_view.__name__:
-            return  # don't require auth for healthcheck
+
+        if request.endpoint == Healthcheck.healthcheck_view.__name__ or request.endpoint == "main.login":
+            return  # don't require auth for healthcheck or sign-in page
 
         @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
         def _login_required():

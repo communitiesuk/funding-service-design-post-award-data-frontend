@@ -28,10 +28,9 @@
         <h1 class="govuk-heading-xl">Find monitoring data</h1>
         <p class="govuk-body">Use this service to find monitoring and evaluation data for funded projects.</p>
 
-        <!-- TODO use the correct href -->
         {{ govukButton({
             "text": "Log in",
-            "href": config['AUTHENTICATOR_HOST'] + "/sso/login", 
+            "href": config['AUTHENTICATOR_HOST'] + "/sso/login?return_app=post-award-frontend", 
             "classes": "login-button"
         }) }}
 
