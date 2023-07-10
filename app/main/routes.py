@@ -39,6 +39,11 @@ def index():
     return redirect(url_for("main.download"))
 
 
+@bp.route("/login", methods=["GET"])
+def login():
+    return render_template("login.html")
+
+
 @bp.route("/download", methods=["GET", "POST"])
 def download():
     form = DownloadForm()
