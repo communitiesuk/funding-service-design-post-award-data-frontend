@@ -1,4 +1,4 @@
-{% extends 'govuk_frontend_jinja/template.html' %}
+{% extends "base.html" %}
 {%- from 'govuk_frontend_jinja/components/footer/macro.html' import govukFooter -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
@@ -13,23 +13,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
-    'tag': {
-      'text': config['SERVICE_PHASE']
-    },
-    'html': 'This is a new service – your <a class="govuk-link" href="mailto:' + config['CONTACT_EMAIL'] +'?subject=Feedback">feedback</a> will help us to improve it.'
-  }) }}
-
-  <div class="govuk-width-container global-actions">
-    {{ govukBackLink({
-      text: "Back",
-      href: "/download"
-    }) }}
-
-    <div class="govuk-!-margin-top-2">
-      <a href="{{ config['AUTHENTICATOR_HOST'] + '/sso/logout' }}"class="govuk-body govuk-link govuk-link--no-underline govuk-link--no-visited-state govuk-!-margin-left-4">Log out</a>
-    </div>
-  </div>
+  {{ super() }}
 {% endblock %}
 
 {% block content %}
