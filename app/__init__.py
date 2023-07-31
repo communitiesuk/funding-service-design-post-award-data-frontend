@@ -71,16 +71,16 @@ def create_app(config_class=Config):
     health = Healthcheck(app)
     health.add_check(FlaskRunningChecker())
 
-    @app.before_request
-    def all_requests_require_login():
-        if request.endpoint == Healthcheck.healthcheck_view.__name__:
-            return  # don't require auth for healthcheck
+    # @app.before_request
+    # def all_requests_require_login():
+    #     if request.endpoint == Healthcheck.healthcheck_view.__name__:
+    #         return  # don't require auth for healthcheck
 
-        @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
-        def _login_required():
-            pass
+    #     @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
+    #     def _login_required():
+    #         pass
 
-        _login_required()
+    #     _login_required()
 
     return app
 
