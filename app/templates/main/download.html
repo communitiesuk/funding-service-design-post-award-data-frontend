@@ -7,6 +7,7 @@
 {%- from 'govuk_frontend_jinja/components/label/macro.html' import govukLabel -%}
 {%- from "outcomeCheckboxes.html" import outcomeCheckboxItems -%}
 {%- from "checkboxes.html" import checkboxItems -%}
+{%- from "accordion.html" import accordion -%}
 {%- from "select.html" import selectItems -%}
 
 {% block beforeContent %}
@@ -34,7 +35,7 @@
       <form method="post" action="{{ url_for('main.download') }}">
         {{ form.csrf_token }}
 
-        {{ govukAccordion({
+        {{ accordion({
           "id": "download",
           "headingLevel": 2,
           "showAllSectionsText": "",
@@ -94,6 +95,8 @@
     <p class="govuk-body">
       <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.data_glossary') }}">Access the funding glossary</a>
     </p>
+
+
 
 </main>
 
