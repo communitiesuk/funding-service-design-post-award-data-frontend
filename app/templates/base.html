@@ -93,6 +93,8 @@
 {% block bodyEnd %}
   <!--[if gt IE 8]><!-->
   <script src="{{ url_for('static', filename='govuk-frontend-4.6.0.min.js') }}"> </script>
+  <script src="{{ url_for('static', filename='src/js/custom.js') }}"> </script>
+
   <script>window.GOVUKFrontend.initAll()</script>
   <!--<![endif]-->
   {% assets "js" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
