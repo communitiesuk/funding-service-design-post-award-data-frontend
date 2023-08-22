@@ -14,7 +14,7 @@ def quarter_to_date(quarter, year):
         "1": f"{start_year}-04-01T00:00:00Z",
         "2": f"{start_year}-07-01T00:00:00Z",
         "3": f"{start_year}-10-01T00:00:00Z",
-        "4": f"{start_year}-01-01T00:00:00Z",
+        "4": f"{int(start_year) + 1}-01-01T00:00:00Z",
     }
 
     return quarter_mapping.get(quarter)
