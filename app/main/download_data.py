@@ -6,9 +6,16 @@ from app.main.data import get_response
 from config import Config
 
 
-def quarter_to_date(quarter, year):
-    # January-March is Q1, April-June is Q2, July-September is Q3, and October-December is Q4
+def financial_quarter_mapping(quarter, year):
+    """
 
+    Args:
+        quarter: int - financial quarter selected by the user
+        year: str - financial year selected by the user
+
+    Returns:
+        Datetime stamp corresponding with the start of the chosen financial period
+    """
     start_year = year.split("/")[0]
     quarter_mapping = {
         "1": f"{start_year}-04-01T00:00:00Z",

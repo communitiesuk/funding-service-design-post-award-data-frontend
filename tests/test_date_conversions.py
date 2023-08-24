@@ -56,15 +56,15 @@ def test_return_periods(requests_mock, flask_test_client):
 
 
 def test_quarter_to_dates():
-    # Q1 includes January, February, and March
+    # Q1 includes April, May, June
     assert quarter_to_date(quarter="1", year="2020/2021") == "2020-04-01T00:00:00Z"
 
-    # Q2 includes April, May, and June
+    # Q2 includes July, August, September
     assert quarter_to_date(quarter="2", year="2022/2023") == "2022-07-01T00:00:00Z"
 
-    # Q3 includes July, August, and September
+    # Q3 includes October, November, December
     assert quarter_to_date(quarter="3", year="2019/2020") == "2019-10-01T00:00:00Z"
 
-    # October, November, and December - Q4 should return up to January of the next year
+    # January, February, March - selecting Q4 should return up to January of the next year
     assert quarter_to_date(quarter="4", year="2021/2022") == "2022-01-01T00:00:00Z"
     assert quarter_to_date(quarter="4", year="2020/2021") == "2021-01-01T00:00:00Z"
