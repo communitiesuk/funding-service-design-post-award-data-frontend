@@ -6,7 +6,7 @@ from app.main.data import get_response
 from config import Config
 
 
-def financial_quarter_mapping(quarter, year):
+def financial_quarter_from_mapping(quarter, year):
     """
 
     Args:
@@ -22,6 +22,19 @@ def financial_quarter_mapping(quarter, year):
         "2": f"{start_year}-07-01T00:00:00Z",
         "3": f"{start_year}-10-01T00:00:00Z",
         "4": f"{int(start_year) + 1}-01-01T00:00:00Z",
+    }
+
+    return quarter_mapping.get(quarter)
+
+
+def financial_quarter_to_mapping(quarter, year):
+    # Returns datetime stamp corresponding with the end of the chosen financial period
+    end_year = year.split("/")[0]
+    quarter_mapping = {
+        "1": f"{end_year}-06-30T00:00:00Z",
+        "2": f"{end_year}-09-30T00:00:00Z",
+        "3": f"{end_year}-12-31T00:00:00Z",
+        "4": f"{int(end_year) + 1}-03-31T00:00:00Z",
     }
 
     return quarter_mapping.get(quarter)
