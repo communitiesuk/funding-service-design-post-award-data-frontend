@@ -38,7 +38,11 @@
             </label>
             <select class="govuk-select" id="to-quarter" name="to-quarter">
                 {% for item in params['to-quarter'] %}
-                    <option value="{{item}}" selected>{{item}}</option>
+                    {% if loop.last %}
+                        <option value="{{item}}" selected>{{item}}</option>
+                    {% else %}
+                        <option value="{{item}}">{{item}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
@@ -49,7 +53,11 @@
             </label>
             <select class="govuk-select" id="to-year" name="to-year">
                 {% for item in params['to-year'] %}
-                    <option value="{{item}}" selected>{{item}}</option>
+                    {% if loop.last %}
+                        <option value="{{item}}" selected>{{item}}</option>
+                    {% else %}
+                        <option value="{{item}}">{{item}}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
