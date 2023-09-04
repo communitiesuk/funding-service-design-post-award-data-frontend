@@ -57,29 +57,26 @@ def test_return_periods(requests_mock, flask_test_client):
 
 
 def test_financial_quarter_from_mapping():
-    # Q1 includes April, May, June
     assert (
         financial_quarter_from_mapping(quarter="1", year="2020/2021")
         == "2020-04-01T00:00:00Z"
     )
 
-    # Q2 includes July, August, September
     assert (
         financial_quarter_from_mapping(quarter="2", year="2022/2023")
         == "2022-07-01T00:00:00Z"
     )
 
-    # Q3 includes October, November, December
     assert (
         financial_quarter_from_mapping(quarter="3", year="2019/2020")
         == "2019-10-01T00:00:00Z"
     )
 
-    # January, February, March - selecting Q4 should return up to January of the next year
     assert (
         financial_quarter_from_mapping(quarter="4", year="2021/2022")
         == "2022-01-01T00:00:00Z"
     )
+
     assert (
         financial_quarter_from_mapping(quarter="4", year="2020/2021")
         == "2021-01-01T00:00:00Z"
@@ -103,3 +100,20 @@ def test_financial_quarter_to_mapping():
         financial_quarter_to_mapping(quarter="4", year="2023/2024")
         == "2024-03-31T00:00:00Z"
     )
+
+
+def test_financial_period_range():
+    # Select Q3 2023/2024 for both to and from dates
+
+    quarter = "3"
+    year = "2023/2024"
+
+    start_date_str = financial_quarter_from_mapping(quarter, year)
+    end_date_str = financial_quarter_to_mapping(quarter, year)
+
+    date_range = datetime.fromisoformat(end_date_str) - datetime.fromisoformat(
+        start_date_str
+    )
+
+    # Assert date range returned (1st October - 31st December 2023) is 91 days
+    assert date_range.days == 91
