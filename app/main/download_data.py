@@ -6,15 +6,17 @@ from app.main.data import get_response
 from config import Config
 
 
-def financial_quarter_from_mapping(quarter: str, year: str) -> str:
+def financial_quarter_from_mapping(quarter: str, year: str) -> str | None:
     """
+    Map the start date of a financial quarter based on user input.
 
     Args:
-        quarter: 'from' financial quarter selected by the user
-        year: 'from' financial year selected by the user
+        quarter: The 'from' financial quarter selected by the user (must be 1, 2, 3, or 4)
+        year: The 'from' financial year selected by the user
 
     Returns:
-        Date stamp corresponding with the start of the chosen financial period
+        Date string corresponding to the start of the chosen financial period in format 'YYYY-MM-DDTHH:MM:SSZ'),
+        or None if the given quarter is invalid
     """
     start_year = year.split("/")[0]
     quarter_mapping = {
@@ -27,15 +29,17 @@ def financial_quarter_from_mapping(quarter: str, year: str) -> str:
     return quarter_mapping.get(quarter)
 
 
-def financial_quarter_to_mapping(quarter: str, year: str) -> str:
+def financial_quarter_to_mapping(quarter: str, year: str) -> str | None:
     """
+    Map the end date of a financial quarter based on user input.
 
     Args:
-        quarter: 'to' financial quarter selected by the user
-        year: 'to' financial year selected by the user
+        quarter: The 'to' financial quarter selected by the user (must be 1, 2, 3, or 4)
+        year: The 'to' financial year selected by the user
 
     Returns:
-        Date stamp corresponding with the end of the chosen financial period
+        Date string corresponding to the start of the chosen financial period in format 'YYYY-MM-DDTHH:MM:SSZ'),
+        or None if the given quarter is invalid
     """
     end_year = year.split("/")[0]
     quarter_mapping = {
