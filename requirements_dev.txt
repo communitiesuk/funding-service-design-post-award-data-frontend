@@ -67,8 +67,10 @@ commonmark==0.9.1
     #   -r requirements.txt
     #   rich
 coverage[toml]==7.2.3
-    # via pytest-cov
-cryptography==41.0.4
+    # via
+    #   coverage
+    #   pytest-cov
+cryptography==41.0.6
     # via
     #   -r requirements.txt
     #   pyjwt
@@ -232,6 +234,7 @@ pyjwt[crypto]==2.7.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   pyjwt
 pyproject-hooks==1.0.0
     # via build
 pytest==7.3.1
@@ -298,6 +301,7 @@ sentry-sdk[flask]==1.22.2
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
