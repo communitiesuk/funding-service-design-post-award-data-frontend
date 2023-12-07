@@ -1,0 +1,38 @@
+{% macro filterCheckboxes(name, items) %}
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="">
+        <div class="scrollable-checkboxes">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="select_all" name="select_all" type="checkbox"
+                        value="" checked=checked onClick="select_all(this)">
+                    <label class="govuk-label govuk-checkboxes__label" for="select_all">
+                        Select all
+                    </label>
+                </div>
+                {% for item in items %}
+                {% if item %}
+                <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input individual-checkbox" id="{{ name }}-{{ item['id'] }}" name="{{ name }}" type="checkbox"
+                        value="{{ item['id'] }}" checked="checked">
+                    <label class="govuk-label govuk-checkboxes__label" for="{{ name }}-{{ item['id'] }}">
+                        {{ item['name'] }}
+                    </label>
+                </div>
+                {%- endif -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script>
+    function select_all(source) {
+        checkboxes = document.querySelectorAll('.individual-checkbox');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = source.checked;
+        });
+    }
+</script>
+
+{% endmacro %}

@@ -92,6 +92,13 @@ def start_page():
         )
 
 
+@bp.route("/funds", methods=["GET", "POST"])
+@login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
+def filter_funds():
+    if request.method == "GET":
+        return render_template("filter_funds.html", funds=get_fund_checkboxes())
+
+
 @bp.route("/download", methods=["GET", "POST"])
 @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
 def download():

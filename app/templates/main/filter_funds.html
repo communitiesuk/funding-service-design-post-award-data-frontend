@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+{%- from "filterCheckboxes.html" import filterCheckboxes -%}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="govuk-heading-xl">Filter by fund</h1>
+
+    {{ filterCheckboxes(funds["name"], funds["items"]) }}
+
+{% endblock %}
