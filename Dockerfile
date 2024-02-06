@@ -2,6 +2,8 @@ FROM python:3.11-slim-bullseye
 ARG REQUIREMENTS=requirements.txt
 WORKDIR /app
 COPY ${REQUIREMENTS} ${REQUIREMENTS}
+RUN apt-get update
+RUN apt-get install -y git
 RUN python3 -m pip install --upgrade pip && pip install -r ${REQUIREMENTS}
 
 COPY . .
