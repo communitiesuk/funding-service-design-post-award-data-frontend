@@ -1,7 +1,7 @@
 #-----------------------------------
 #   Utils
 #-----------------------------------
-funding-service-design-utils>=2.0.2,<2.1.0
+git+https://github.com/communitiesuk/funding-service-design-utils.git@bau-remove-unusued
 
 flask-assets==2.0
 cssmin==0.2.0
