@@ -141,7 +141,7 @@ def download():
             {
                 "request_type": "download",
                 "user_id": g.account_id,
-                "query_params" : query_params,
+                "query_params": query_params,
             }
         )
         return send_file(
