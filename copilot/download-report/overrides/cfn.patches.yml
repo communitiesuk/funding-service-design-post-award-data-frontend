@@ -26,4 +26,4 @@
           Action:
             - 'logs:GetQueryResults'
             - 'logs:StartQuery'
-          Resource: '*'
+          Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/copilot/${AppName}-${EnvName}-data-frontend:*'
