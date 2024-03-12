@@ -30,7 +30,9 @@ memory: 512    # Amount of memory in MiB used by the task.
 secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
   NOTIFY_API_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/NOTIFY_API_KEY
 
-# You can override any of the values defined above by environment.
-#environments:
-#  prod:
-#    cpu: 2048               # Larger CPU value for prod environment.
+# Set email for production
+environments:
+ production:
+   secrets:
+     NOTIFY_API_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/NOTIFY_API_KEY
+     NOTIFY_SEND_EMAIL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/NOTIFY_SEND_EMAIL
