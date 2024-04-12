@@ -94,7 +94,7 @@ gunicorn==20.1.0
     # via
     #   -r requirements.in
     #   funding-service-design-utils
-idna==3.4
+idna==3.7
     # via
     #   email-validator
     #   requests
