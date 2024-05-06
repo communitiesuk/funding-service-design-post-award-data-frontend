@@ -144,6 +144,10 @@ govuk-frontend-jinja==2.6.0
     #   govuk-frontend-wtf
 govuk-frontend-wtf==2.4.0
     # via -r requirements.txt
+greenlet==3.0.3
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
@@ -337,7 +341,7 @@ webassets==2.0
     # via
     #   -r requirements.txt
     #   flask-assets
-werkzeug==2.3.8
+werkzeug==3.0.3
     # via
     #   -r requirements.txt
     #   flask
