@@ -1,5 +1,4 @@
 # isort: off
-from datetime import datetime
 
 from flask import (
     flash,
@@ -7,7 +6,6 @@ from flask import (
     render_template,
     request,
     url_for,
-    send_file,
     abort,
     current_app,
     g,
@@ -29,7 +27,7 @@ from app.main.download_data import (
     get_org_checkboxes,
     get_outcome_checkboxes,
     get_returns,
-    process_api_response,
+    process_async_download,
 )
 from app.main.forms import DownloadForm
 
@@ -86,8 +84,6 @@ def download():
         to_quarter = request.form.get("to-quarter")
         to_year = request.form.get("to-year")
 
-        current_datetime = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-
         reporting_period_start = (
             financial_quarter_from_mapping(quarter=from_quarter, year=from_year) if to_quarter and to_year else None
         )
@@ -96,7 +92,7 @@ def download():
             financial_quarter_to_mapping(quarter=to_quarter, year=to_year) if to_quarter and to_year else None
         )
 
-        query_params = {"file_format": file_format}
+        query_params = {"email_address": g.user.email, "file_format": file_format}
         if orgs:
             query_params["organisations"] = orgs
         if areas:
@@ -110,7 +106,7 @@ def download():
         if reporting_period_end:
             query_params["rp_end"] = reporting_period_end
 
-        content_type, file_content = process_api_response(query_params)
+        process_async_download(query_params)  # Todo: Change it to async
 
         current_app.logger.info(
             "Request for download by {user_id=} with {query_params=}",
@@ -120,21 +116,14 @@ def download():
                 "query_params": query_params,
             },
         )
-        return send_file(
-            file_content,
-            download_name=f"download-{current_datetime}.{file_format}",
-            as_attachment=True,
-            mimetype=content_type,
-        )
+
+        return redirect(url_for("main.request_received"))
 
 
 @bp.route("/request-received", methods=["GET", "POST"])
 @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
 def request_received():
-    context = {
-        "user_email": g.user.email,
-    }
-    return render_template("request-received.html", context=context)
+    return render_template("request-received.html", user_email=g.user.email)
 
 
 @bp.route("/accessibility", methods=["GET"])
