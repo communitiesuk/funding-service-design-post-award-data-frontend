@@ -3,7 +3,9 @@ import json
 from datetime import datetime
 from enum import StrEnum
 from typing import Any
+from urllib.parse import urlencode
 
+import requests
 from flask import abort, current_app
 
 from app.const import MIMETYPE
@@ -238,3 +240,12 @@ def process_api_response(query_params: dict) -> tuple:
         return abort(500), f"Unknown content type: {content_type}"
 
     return content_type, file_content
+
+
+def process_async_download(query_params: dict):
+    request_url = (
+        Config.DATA_STORE_API_HOST
+        + "/async_download"
+        + ("?" + urlencode(query_params, doseq=True) if query_params else "")
+    )
+    requests.get(request_url)
