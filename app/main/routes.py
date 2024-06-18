@@ -27,9 +27,9 @@ from app.main.download_data import (
     get_outcome_checkboxes,
     get_region_checkboxes,
     get_returns,
-    process_async_download,
 )
 from app.main.forms import DownloadForm
+from app.main.tasks import add_download_task
 
 
 @bp.route("/", methods=["GET"])
@@ -106,7 +106,7 @@ def download():
         if reporting_period_end:
             query_params["rp_end"] = reporting_period_end
 
-        process_async_download(query_params)  # Todo: Change it to async
+        add_download_task(query_params)  # Todo: Change it to async
 
         current_app.logger.info(
             "Request for download by {user_id} with {query_params}",

@@ -12,3 +12,4 @@ pytest-env
 requests-mock
 pytest-mock
 ruff==0.4.7  # if bumping this, bump .pre-commit-config.yml as well
+rq==1.16.2
