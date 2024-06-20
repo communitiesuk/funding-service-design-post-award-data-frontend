@@ -2,6 +2,7 @@
 import os
 
 FLASK_ENV = os.getenv("FLASK_ENV")
+FLASK_ENV = "development" if not FLASK_ENV else FLASK_ENV
 
 if not FLASK_ENV:
     raise KeyError("FLASK_ENV does not exist in environ")
