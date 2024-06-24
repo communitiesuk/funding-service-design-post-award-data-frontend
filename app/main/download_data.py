@@ -246,6 +246,7 @@ def process_async_download(query_params: dict):
     request_url = (
         Config.DATA_STORE_API_HOST
         + "/async_download"
+        # + "/background_download"
         + ("?" + urlencode(query_params, doseq=True) if query_params else "")
     )
     requests.get(request_url)
