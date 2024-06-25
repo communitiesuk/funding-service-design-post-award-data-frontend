@@ -36,3 +36,9 @@ class DefaultConfig(object):
         RSA256_PUBLIC_KEY = base64.b64decode(RSA256_PUBLIC_KEY_BASE64).decode()
 
     AUTO_BUILD_ASSETS = False
+
+    CELERY = dict(
+        broker_url=os.getenv("REDIS_INSTANCE_URI", "redis://redis-data:6379"),
+        result_backend=os.getenv("REDIS_INSTANCE_URI", "redis://redis-data:6379"),
+        task_ignore_result=True,
+    )
