@@ -22,3 +22,9 @@ class DevelopmentConfig(DefaultConfig):
         "highest_role_map": {},
     }
     AUTO_BUILD_ASSETS = True
+
+    CELERY = dict(
+        broker_url="redis://redis-data:6379",
+        result_backend="redis://redis-data:6379",
+        task_ignore_result=True,
+    )
