@@ -106,6 +106,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+venv_rq/
+venv_postgres/
+venv_celery/
 
 # Spyder project settings
 .spyderproject

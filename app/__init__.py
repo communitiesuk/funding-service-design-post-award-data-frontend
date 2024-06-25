@@ -68,3 +68,18 @@ def create_app(config_class=Config):
 
 
 app = create_app()
+
+
+# from config.celery_config import make_celery
+# app.config['CELERY_BROKER_URL'] = 'amqp://guest:guest@localhost:5672//'
+
+# app.config['CELERY_BROKER_URL'] = 'amqp://localhost//'
+# app.config['CELERY_BROKER_URL'] = 'rabbitmqcli-124-rabbit@localhost'
+
+# app.config['CELERY_BROKER_URL'] = 'amqp://user:password@rabbit1:5672'
+# app.config['CELERY_RESULT_BACKEND'] = 'database url???'
+
+# celery = make_celery(app)
+
+
+# Run worker from terminal:         celery -A app.celery worker --loglevel=info
