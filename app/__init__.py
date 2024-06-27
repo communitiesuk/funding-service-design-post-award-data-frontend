@@ -87,33 +87,3 @@ def celery_init_app(app: Flask) -> Celery:
 
 
 celery_app = celery_init_app(app)
-
-# log.basicConfig(level=log.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# logger = log.getLogger(__name__)
-
-
-# log.basicConfig(level=log.INFO,
-#                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     handlers=[
-#                         log.FileHandler("celery_log.txt"),
-#                         log.StreamHandler()
-#                     ])
-
-# logger = log.getLogger(__name__)
-
-
-# logger = log.getLogger(__name__)
-# logger.setLevel(log.INFO)
-
-# file_handler = log.FileHandler('celery_log.txt')
-# file_handler.setLevel(log.INFO)
-
-# console_handler = log.StreamHandler()
-# console_handler.setLevel(log.INFO)
-
-# formatter = log.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# file_handler.setFormatter(formatter)
-# console_handler.setFormatter(formatter)
-
-# logger.addHandler(file_handler)
-# logger.addHandler(console_handler)

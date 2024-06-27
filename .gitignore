@@ -106,9 +106,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-venv_rq/
-venv_celery/
-venv_celery_redis/
 
 # Spyder project settings
 .spyderproject
