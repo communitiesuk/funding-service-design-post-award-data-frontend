@@ -3,8 +3,7 @@ import pytest
 
 @pytest.fixture
 def mocked_async_download(mocker):
-    # Mock the Celery task
-    return mocker.patch("tasks.process_async_download.delay", return_value=True)
+    return mocker.patch("app.main.download_data.process_async_download", return_value=True)
 
 
 def test_download_logging(flask_test_client, caplog, mocked_async_download):
