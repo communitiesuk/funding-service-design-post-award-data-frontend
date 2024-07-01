@@ -10,7 +10,7 @@ repos:
     - id: check-ast
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version. If bumping this, bump requirements-dev.txt as well
-  rev: v0.4.7
+  rev: v0.5.0
   hooks:
     # Run the linter.
     - id: ruff
@@ -19,7 +19,7 @@ repos:
     - id: ruff-format
 - repo: https://github.com/pre-commit/mirrors-mypy
   # mypy. If bumping this, bump requirements-dev.txt as well
-  rev: 'v1.10.0'  # Use the sha / tag you want to point at
+  rev: 'v1.10.1'  # Use the sha / tag you want to point at
   hooks:
     - id: mypy
       additional_dependencies: [types-jmespath, types-requests, types-beautifulsoup4, types-flask, types-python-dateutil]
