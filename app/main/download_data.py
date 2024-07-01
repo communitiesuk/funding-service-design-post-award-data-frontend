@@ -243,9 +243,13 @@ def process_api_response(query_params: dict) -> tuple:
 
 
 def process_async_download(query_params: dict):
+    """Calls data-store for a file download request.
+
+    :param query_params: Query parameters for the API request.
+    """
     request_url = (
         Config.DATA_STORE_API_HOST
         + "/trigger_async_download"
         + ("?" + urlencode(query_params, doseq=True) if query_params else "")
     )
-    requests.get(request_url)
+    requests.post(request_url)
