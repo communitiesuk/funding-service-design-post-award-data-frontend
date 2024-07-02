@@ -1,5 +1,4 @@
 # isort: off
-from datetime import datetime
 
 from flask import (
     flash,
@@ -7,10 +6,11 @@ from flask import (
     render_template,
     request,
     url_for,
-    send_file,
     abort,
     current_app,
     g,
+    jsonify,
+    Response,
 )
 
 # isort: on
@@ -19,6 +19,7 @@ from fsd_utils.authentication.config import SupportedApp
 from fsd_utils.authentication.decorators import login_requested, login_required
 from werkzeug.exceptions import HTTPException
 
+from app.const import MIMETYPE
 from app.main import bp
 from app.main.download_data import (
     FormNames,
@@ -29,9 +30,10 @@ from app.main.download_data import (
     get_outcome_checkboxes,
     get_region_checkboxes,
     get_returns,
-    process_api_response,
+    process_async_download,
+    retrieve_download_file,
 )
-from app.main.forms import DownloadForm
+from app.main.forms import DownloadForm, RetrieveForm
 
 
 @bp.route("/", methods=["GET"])
@@ -86,8 +88,6 @@ def download():
         to_quarter = request.form.get("to-quarter")
         to_year = request.form.get("to-year")
 
-        current_datetime = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-
         reporting_period_start = (
             financial_quarter_from_mapping(quarter=from_quarter, year=from_year) if to_quarter and to_year else None
         )
@@ -96,7 +96,7 @@ def download():
             financial_quarter_to_mapping(quarter=to_quarter, year=to_year) if to_quarter and to_year else None
         )
 
-        query_params = {"file_format": file_format}
+        query_params = {"email_address": g.user.email, "file_format": file_format}
         if orgs:
             query_params["organisations"] = orgs
         if regions:
@@ -110,7 +110,7 @@ def download():
         if reporting_period_end:
             query_params["rp_end"] = reporting_period_end
 
-        content_type, file_content = process_api_response(query_params)
+        process_async_download(query_params)  # Todo: Change it to async
 
         current_app.logger.info(
             "Request for download by {user_id} with {query_params}",
@@ -121,21 +121,59 @@ def download():
                 "request_type": "download",
             },
         )
-        return send_file(
-            file_content,
-            download_name=f"download-{current_datetime}.{file_format}",
-            as_attachment=True,
-            mimetype=content_type,
-        )
+
+        return redirect(url_for("main.request_received"))
 
 
 @bp.route("/request-received", methods=["GET", "POST"])
 @login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
 def request_received():
-    context = {
-        "user_email": g.user.email,
-    }
-    return render_template("request-received.html", context=context)
+    return render_template("request-received.html", user_email=g.user.email)
+
+
+@bp.route("/retrieve-download/<UUID>", methods=["GET", "POST"])
+@login_required(return_app=SupportedApp.POST_AWARD_FRONTEND)
+def retrieve_download(UUID: str):
+    response = retrieve_download_file(UUID)
+    file_size = int(response.headers.get("content-length", -1))
+    content_type = response.headers.get("content-type")
+    file_format = ""
+
+    print(content_type)
+    if content_type == "application/octet-stream":
+        file_format = "Microsoft spreadsheet"
+    elif content_type == MIMETYPE.JSON:
+        file_format = "JSON"
+    else:
+        file_format = "Unknow type"
+
+    form = RetrieveForm()
+    context = {"UUID": UUID, "file_format": file_format, "file_size": file_size}
+    if response.status_code == 404:
+        return render_template("file-not-found.html")
+    if form.validate_on_submit():
+        if response.status_code == 200:
+            try:
+                current_app.logger.info(
+                    "Request for download by {{user_id=}}",
+                    extra={
+                        "user_id": g.account_id,
+                        "email": g.user.email,
+                    },
+                )
+                return Response(
+                    response.iter_content(chunk_size=10 * 1024),
+                    headers={
+                        "Content-Disposition": response.headers.get("Content-Disposition"),
+                        "Content-Type": response.headers.get("Content-Type"),
+                    },
+                )
+            except ValueError:
+                return jsonify({"error": "Invalid response from data store"}), 500
+        else:
+            return jsonify({"error": f"Error retrieving file: {response.status_code}"}), response.status_code
+    else:
+        return render_template("retrieve-download.html", context=context, form=form)
 
 
 @bp.route("/accessibility", methods=["GET"])

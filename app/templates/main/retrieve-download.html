@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Your data is ready to be downloaded</h1>
+    <div class="govuk-inset-text">
+      <p>You requested a data download on <span class="govuk-!-font-weight-bold">{date}</span>.
+      <br>File format: <span class="govuk-!-font-weight-bold">{{ context.file_format }}, {{ context.file_size }} KB</span></p>
+    </div>
+    <form id="download-form" method="post" action="{{ url_for('.retrieve_download', uuid=context.UUID) }}">
+      {{ form.csrf_token }}
+      <input type="hidden" name="uuid" id="download-uuid" value="{{ context.UUID }}">
+      <!-- {{ form.download }} -->
+      <button type="submit" class="govuk-button govuk-!-margin-top-3" data-module="govuk-button">
+        Download your data
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block bodyEnd %}
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){console.log('JavaScript is working!');});
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const uniqueId = document.getElementById('download-uuid').getAttribute('data-uuid');
+      document.getElementById('download-uuid').value = uniqueId;
+
+      setTimeout(function() {
+          document.getElementById('download-form').submit();
+        },
+        3000
+      ); // 3000 milliseconds = 3 seconds
+  });
+</script>
+{% endblock bodyEnd %}
