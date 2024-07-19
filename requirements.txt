@@ -88,7 +88,9 @@ govuk-frontend-jinja==2.6.0
     #   govuk-frontend-wtf
 govuk-frontend-wtf==2.4.0
     # via -r requirements.in
-gunicorn==20.1.0
+greenlet==3.0.3
+    # via sqlalchemy
+gunicorn==22.0.0
     # via
     #   -r requirements.in
     #   funding-service-design-utils
@@ -123,6 +125,8 @@ markupsafe==2.1.2
     #   wtforms
 notifications-python-client==9.0.0
     # via -r requirements.in
+packaging==24.1
+    # via gunicorn
 pycparser==2.21
     # via cffi
 pyee==6.0.0
@@ -195,6 +199,3 @@ wtforms==3.0.1
     # via
     #   flask-wtf
     #   govuk-frontend-wtf
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
