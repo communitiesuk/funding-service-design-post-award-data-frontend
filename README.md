@@ -1,5 +1,7 @@
 # funding-service-design-post-award-data-frontend
 
+_This repository is no longer in use, superseded by the migration to a monolith in https://github.com/communitiesuk/funding-service-design-post-award-data-store/pull/641_
+
 ## Prerequisites
 
 - Python 3.11.x or higher
